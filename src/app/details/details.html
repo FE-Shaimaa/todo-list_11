@@ -1,0 +1,103 @@
+<div class="container">
+  <a href="javascript:history.back()" class="btn btn-light btn-sm shadow-sm mb-3 back-btn">
+    <i class="fa fa-arrow-left"></i>
+  </a>
+
+  @if (product) {
+  <div class="row g-4">
+    <div class="col-md-5">
+      <div class="card shadow-sm">
+        <img [src]="selectedImage || (product.images.length ? product.images[0] : product.thumbnail)"
+          class="card-img-top img-fluid border-bottom main-image" [alt]="product.title">
+        <div class="card-body">
+          <div class="d-flex flex-wrap gap-2">
+            @for (img of product.images; track img) {
+            <img [src]="img" (click)="selectedImage = img" class="img-thumbnail shadow-sm thumb-image"
+              [alt]="product.title + ' thumbnail'">
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-7">
+      <h1 class="h4 mb-1 fw-bold">{{ product.title }}</h1>
+      <div class="mb-2 text-muted fst-italic">
+        Brand: {{ product.brand }} • Category: {{ product.category }}
+      </div>
+
+      <div class="mb-3 d-flex align-items-baseline gap-3">
+        <span class="h5 fw-bold text-primary">{{ product.price | number:'1.2-2' }}$</span>
+      </div>
+
+      <div class="mb-2">
+        @if (product.stock === 0) {
+        <span class="badge bg-danger fw-normal">Out of Stock</span>
+        } @else if (product.stock < 20) {
+        <span class="badge bg-warning text-dark fw-normal">Low Stock ({{ product.stock }})</span>
+        } @else {
+        <span class="badge bg-success fw-normal">In Stock ({{ product.stock }})</span>
+        }
+
+        <span class="ms-3">
+          <strong>Rating:</strong>
+          <i class="fa-solid fa-star text-warning"></i> {{ product.rating }}/5
+        </span>
+      </div>
+
+      <p class="mt-3 lead">{{ product.description }}</p>
+
+      <div class="mb-3">
+        <strong>Tags:</strong>
+        @if (product.tags?.length) {
+        @for (t of product.tags; track t) {
+        <span class="badge bg-secondary me-1">{{ t }}</span>
+        }
+        } @else {
+        <span class="text-muted">—</span>
+        }
+      </div>
+
+      <div class="mb-3">
+        <strong>Weight:</strong> {{ product.weight }} g
+        <span class="ms-3"><strong>Min order:</strong> {{ product.minimumOrderQuantity }}</span>
+      </div>
+
+      <dl class="row">
+        <dt class="col-sm-4">Dimensions</dt>
+        <dd class="col-sm-8">{{ product.dimensions.width }} × {{ product.dimensions.height }} × {{
+          product.dimensions.depth }}</dd>
+
+        <dt class="col-sm-4">Warranty</dt>
+        <dd class="col-sm-8">{{ product.warrantyInformation }}</dd>
+
+        <dt class="col-sm-4">Shipping</dt>
+        <dd class="col-sm-8">{{ product.shippingInformation }}</dd>
+
+        <dt class="col-sm-4">Return policy</dt>
+        <dd class="col-sm-8">{{ product.returnPolicy }}</dd>
+      </dl>
+
+      <div class="d-flex align-items-center gap-2 mb-3">
+        <button class="btn btn-outline-secondary" (click)="decrease()">-</button>
+        <span class="px-3 border rounded">{{ quantity }}</span>
+        <button class="btn btn-outline-secondary" (click)="increase()">+</button>
+      </div>
+
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn btn-primary shadow-sm" [routerLink]="['/cart', product.id]" [disabled]=" product.stock===0">
+          <i class="fa fa-cart-plus me-1"></i> Add to cart
+        </button>
+
+        <button class="btn btn-success shadow-sm">
+          <i class="fa fa-bag-shopping"></i> Buy Now
+        </button>
+      </div>
+    </div>
+  </div>
+  } @else {
+  <div class="alert alert-warning"> Product not found</div>
+  }
+</div>
+
+<!-- Shaimaa Sabry  -->

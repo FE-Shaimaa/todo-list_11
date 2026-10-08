@@ -1,0 +1,33 @@
+.back-btn {
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-image {
+    object-fit: contain;
+    max-height: 420px;
+}
+
+.thumb-image {
+    width: 72px;
+    height: 72px;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.thumb-image:hover {
+    transform: scale(1.05);
+}
+
+.btn i {
+    font-size: 0.95rem;
+}
+
+.container {
+    padding-bottom: 2rem;
+}
